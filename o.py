@@ -56,6 +56,7 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
         self.title(ar_title(f"منظم ملفات علاء الذكي - الإصدار {self.version}"))
         self.geometry("700x620")
         self.center_main_window(700, 620)
+        self.minsize(700, 620)
 
         self.raw_src = self.load_last_folder()
         self.user_config = self.load_app_config()
@@ -64,18 +65,24 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
         self.apply_user_config()
 
         # الواجهة
-        self.label = ctk.CTkLabel(self, text=ar("مساعد علاء الذكي (مع تنبيهات صوتية)"), 
-                                 font=ctk.CTkFont(size=24, weight="bold"))
-        self.label.pack(pady=20)
+        self.main_container = ctk.CTkFrame(self, corner_radius=14, fg_color="#1f1f1f")
+        self.main_container.pack(fill="both", expand=True, padx=20, pady=20)
 
-        self.path_label = ctk.CTkLabel(self, text=ar(f"المجلد: {self.raw_src}"), wraplength=500)
-        self.path_label.pack(pady=5)
+        self.label = ctk.CTkLabel(
+            self.main_container,
+            text=ar("مساعد علاء الذكي (مع تنبيهات صوتية)"),
+            font=ctk.CTkFont(size=24, weight="bold")
+        )
+        self.label.pack(pady=(18, 10))
 
-        self.btn_select = ctk.CTkButton(self, text=ar("تغيير المجلد"), command=self.select_folder)
-        self.btn_select.pack(pady=10)
+        self.path_label = ctk.CTkLabel(self.main_container, text=ar(f"المجلد: {self.raw_src}"), wraplength=620)
+        self.path_label.pack(pady=(0, 12), padx=16)
 
-        self.button_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.button_frame.pack(pady=20)
+        self.btn_select = ctk.CTkButton(self.main_container, text=ar("تغيير المجلد"), command=self.select_folder)
+        self.btn_select.pack(pady=(0, 14))
+
+        self.button_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
+        self.button_frame.pack(pady=(0, 14))
 
         self.btn_start = ctk.CTkButton(self.button_frame, text=ar("تنظيم شامل"), 
                                       command=self.start_smart_analysis,
@@ -92,8 +99,8 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
                                          fg_color="#34495e", hover_color="#46627f", width=120)
         self.btn_settings.grid(row=0, column=2, padx=10)
 
-        self.log_box = ctk.CTkTextbox(self, width=620, height=250)
-        self.log_box.pack(pady=10)
+        self.log_box = ctk.CTkTextbox(self.main_container, width=640, height=270)
+        self.log_box.pack(fill="both", expand=True, padx=16, pady=(0, 16))
         self.log("تم تحميل الإعدادات.")
 
     def center_main_window(self, width, height):
