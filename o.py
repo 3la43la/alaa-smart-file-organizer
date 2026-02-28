@@ -55,6 +55,7 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
         self.version = "1.4.0"
         self.title(ar_title(f"منظم ملفات علاء الذكي - الإصدار {self.version}"))
         self.geometry("700x620")
+        self.center_main_window(700, 620)
 
         self.raw_src = self.load_last_folder()
         self.user_config = self.load_app_config()
@@ -94,6 +95,14 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
         self.log_box = ctk.CTkTextbox(self, width=620, height=250)
         self.log_box.pack(pady=10)
         self.log("تم تحميل الإعدادات.")
+
+    def center_main_window(self, width, height):
+        self.update_idletasks()
+        screen_w = self.winfo_screenwidth()
+        screen_h = self.winfo_screenheight()
+        pos_x = (screen_w - width) // 2
+        pos_y = (screen_h - height) // 2
+        self.geometry(f"{width}x{height}+{pos_x}+{pos_y}")
 
     def log(self, message):
         timestamp = datetime.now().strftime("%H:%M:%S")
@@ -212,7 +221,15 @@ class AlaasOrganizerV1_4_0(ctk.CTk):
     def open_settings_window(self):
         settings = ctk.CTkToplevel(self)
         settings.title(ar_title("الإعدادات"))
-        settings.geometry("760x560")
+        width, height = 620, 500
+        self.update_idletasks()
+        root_x = self.winfo_x()
+        root_y = self.winfo_y()
+        root_w = self.winfo_width()
+        root_h = self.winfo_height()
+        pos_x = root_x + (root_w - width) // 2
+        pos_y = root_y + (root_h - height) // 2
+        settings.geometry(f"{width}x{height}+{pos_x}+{pos_y}")
         settings.attributes("-topmost", True)
 
         help_text = (
