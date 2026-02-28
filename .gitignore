@@ -1,0 +1,5 @@
+__pycache__/
+**/__pycache__/
+*.pyc
+last_folder.txt
+**/last_folder.txt
